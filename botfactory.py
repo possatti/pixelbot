@@ -85,7 +85,7 @@ def points_from_image(image_path):
 				points.append(Point(x, y, best_color))
 	return points
 
-def produce_bot(points, ox, oy, save_path):
+def produce_bot(points, ox, oy, fingerprint, save_path):
 	"""Use the bot template to produce bot ready for use."""
 
 	# Prepare template.
@@ -99,7 +99,10 @@ def produce_bot(points, ox, oy, save_path):
 		points_string += str(point) + ', '
 
 	# Produce and save the bot.
-	bot_content = template.substitute(points=points_string, ox=ox, oy=oy)
+	bot_content = template.substitute(
+		points=points_string,
+		ox=ox, oy=oy,
+		fingerprint=fingerprint)
 	with open(save_path, 'w') as f:
 		f.write(bot_content)
 
@@ -122,14 +125,15 @@ def main():
 
 	# Create and save the bot.
 	print('Saving bot to \'{}\'...'.format(bot_save_path), file=sys.stderr)
-	produce_bot(points, args.x_offset, args.y_offset, bot_save_path)
+	produce_bot(points, args.x_offset, args.y_offset, args.fingerprint, bot_save_path)
 	print('All done.', file=sys.stderr)
 
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description='')
 	parser.add_argument('file_path', help='The file indicating what should be built by the robot. It can be an image or a text file.')
-	parser.add_argument('x_offset', help='X coordinate for where in the canvas, the points should be placed.')
-	parser.add_argument('y_offset', help='Y coordinate for where in the canvas, the points should be placed.')
+	parser.add_argument('x_offset', type=int, help='X coordinate for where in the canvas the drawing should be painted.')
+	parser.add_argument('y_offset', type=int, help='Y coordinate for where in the canvas the drawing should be painted.')
+	parser.add_argument('fingerprint', help='Your fingerprint.')
 	parser.add_argument('-t', '--bot-template', default='template/pixelbot-template.js', help='Location do the template which will produce the bot.')
 	parser.add_argument('-s', '--save-to', help='Where the bot script should be saved to. Defaults to <file_path> terminating with `.js`.')
 	args = parser.parse_args()
