@@ -121,7 +121,7 @@ def main():
 	if args.save_to:
 		bot_save_path = args.save_to
 	else:
-		bot_save_path = re.sub(r'\..*?$', '.js', args.file_path)
+		bot_save_path = re.sub(r'\.\w+$', '.js', args.file_path)
 
 	# Create and save the bot.
 	print('Saving bot to \'{}\'...'.format(bot_save_path), file=sys.stderr)
