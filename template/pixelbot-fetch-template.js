@@ -25,7 +25,6 @@ function doPaint(point, token, done) {
   paint(point.x, point.y, point.color, fingerprint, token)
     .then(function (response) {
       console.log('Request succeful. Response:', response)
-      console.log('All arguments:', arguments);
       response.json()
         .then(function (json_body) {
           console.log('Response body:', json_body);
@@ -51,8 +50,8 @@ function doPaint(point, token, done) {
     .catch(function (reason) {
       console.error('Failed to paint:', point.x, point.y, point.color);
       console.error('Due to the following reason:', reason);
-      console.error('All arguments', arguments);
-      console.log('Halting? I am confused... I don\' know...');
+      console.error('Are you sure everything is fine with your internet connection?');
+      console.log('Halting for now.');
     });
 }
 
