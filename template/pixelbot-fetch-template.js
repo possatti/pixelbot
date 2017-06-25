@@ -24,7 +24,7 @@ function paint(x, y, color, fingerprint, token) {
 function doPaint(point, token, done) {
   paint(point.x, point.y, point.color, fingerprint, token)
     .then(function (response) {
-      console.log('Request succeful. Response:', response)
+      console.log('Request successful. Response:', response)
       response.json()
         .then(function (json_body) {
           console.log('Response body:', json_body);
@@ -77,7 +77,8 @@ function getNewToken(cb) {
   function newCaptchaHandler(token) {
     console.log('The captcha was solved:', arguments);
     cb(token);
-    oldCaptchaHandler(arguments);
+    // Invoke the old captcha handler. So that everything keeps going normal.
+    oldCaptchaHandler.apply(this, arguments);
   }
   window.onCaptcha = newCaptchaHandler;
 }
