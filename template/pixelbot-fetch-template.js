@@ -48,8 +48,8 @@ function doPaint(point, token, done) {
           console.error('Failed to read body of response. Reason:', reason);
         });
     })
-    .catch(function (argument) {
-      console.error('Failed to paint:', paint.x, paint.y, paint.color);
+    .catch(function (reason) {
+      console.error('Failed to paint:', point.x, point.y, point.color);
       console.error('Due to the following reason:', reason);
       console.error('All arguments', arguments);
       console.log('Halting? I am confused... I don\' know...');
