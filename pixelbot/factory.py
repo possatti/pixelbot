@@ -36,8 +36,12 @@ COLORS = [
 def parse_text_file(file_path):
     """Parse a text file into a list of points to paint on pixelcanvas.io."""
 
-    with open(file_path, 'r') as f:
-        lines = f.readlines()
+    try:
+        with open(file_path, 'r') as f:
+            lines = f.readlines()
+    except FileNotFoundError:
+        print('File \'{}\' does not exist.'.format(file_path), file=sys.stderr)
+        exit(1)
 
     points = []
     for row, line in enumerate(lines):
@@ -53,11 +57,18 @@ def parse_text_file(file_path):
 def parse_image_file(image_path):
     """Parse an image into a list of points to paint on pixelcanvas.io."""
 
-    from PIL import Image
+    try:
+        from PIL import Image
+    except ImportError:
+        print('Oops... You need to install \'pillow\' in order to produce bots from images.', file=sys.stderr)
+        print('Terminating.', file=sys.stderr)
+        exit(1)
+
     try:
         image = Image.open(image_path)
     except FileNotFoundError:
         print('File \'{}\' does not exist.'.format(image_path), file=sys.stderr)
+        exit(1)
     image_data = image.getdata()
     print('Parsing image \'{}\' with resolution {}x{}.'.format(image_path, image.width, image.height), file=sys.stderr)
 
@@ -89,8 +100,13 @@ def produce_bot(points, ox, oy, fingerprint, template_path, save_path):
     """Use the bot template to produce bot ready for use."""
 
     # Prepare template.
-    with open(template_path) as f:
-        lines = f.readlines()
+    try:
+        with open(template_path) as f:
+            lines = f.readlines()
+    except FileNotFoundError:
+        print('Template file \'{}\' does not exist.'.format(template_path), file=sys.stderr)
+        exit(1)
+
     template = Template(''.join(lines))
     print('Using template from `{}`.'.format(template_path), file=sys.stderr)
 
@@ -109,14 +125,17 @@ def produce_bot(points, ox, oy, fingerprint, template_path, save_path):
 
 
 def create(file_path, ox, oy, fingerprint, template_path, save_path):
-    print('Parsing file...', file=sys.stderr)
+    print('Checking file type...', file=sys.stderr)
     if file_path.endswith('.txt'):
+        print('Parsing \'{}\' as a text file...'.format(file_path), file=sys.stderr)
         points = parse_text_file(file_path)
     elif re.match(r'.*\.(png|bmp|jpg|jpeg|gif)$', file_path):
+        print('Parsing \'{}\' as an image file...'.format(file_path), file=sys.stderr)
         points = parse_image_file(file_path)
     else:
-        print('Can\'t produce any bot from \'{}\'. '.format(file_path), file=sys.stderr)
+        print('Can\'t produce any bot from \'{}\'. File extension not supported.'.format(file_path), file=sys.stderr)
         exit(1)
+
     print('Number of points produced: {}.'.format(len(points)), file=sys.stderr)
 
     # Create and save the bot.
