@@ -1,6 +1,14 @@
 pixelbot
 ========
 
+## ABANDONED
+
+**en:** As of today (2017-07-19), I've decided to abandon this project. Creating a bot for pixelcanvas.io has become increasingly difficult, although still possible. The code will stay here in case it helps anyone. But I lack the motivation and time to maintain this. If you are looking for an actively developed bot, you should take a look at [RogerioBlanco/PixelCanvasBot](https://github.com/RogerioBlanco/PixelCanvasBot), it looks actively developed.
+
+**pt:** Hoje (2017-07-19) eu decidi abandonar este projeto. Criar um bot para o pixelcanvas.io está se tornando cada vez mais difícil, apesar de ainda ser possível. Vou deixar o código aqui, na esperança de que seja útil para alguém. Mas estou sem motivação e tempo para continuar mantendo o projeto. Se você está procurando um bot ainda em desenvolvimento dê uma olhada em [RogerioBlanco/PixelCanvasBot](https://github.com/RogerioBlanco/PixelCanvasBot).
+
+## Description
+
 This is an attempt to create bots for the pixelcanvas.io site. It is very experimental and not ready at all. Currently the bot can't skip the cooldown, and can't solve the captchas for you. But it is still useful because the bot can place each pixel right after the other automatically. Requiring very little attention from you, hopefully.
 
 ## How to use it
